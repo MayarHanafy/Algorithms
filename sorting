@@ -1,0 +1,79 @@
+#include <iostream>
+#include <bits/stdc++.h>
+
+using namespace std;
+
+void bubbleSort(){
+    intout, in;
+    for(out=nElems-1; out>1; out--) // outer loop (backward)
+      for(in=0; in<out; in++) // inner loop (forward)
+       if( a[in] > a[in+1] ) // out of order?
+         swap(in, in+1); // swap them
+} // end bubbleSort()
+    
+void swap(intone, inttwo){
+    long temp = a[one];
+    a[one] = a[two];
+    a[two] = temp;
+}
+
+void selectionSort(){
+    intout, in, min;
+    for(out=0; out<nElems-1; out++) // outer loop
+    {
+        min = out; // minimum
+        for(in=out+1; in<nElems; in++)// inner loop
+           if(a[in] < a[min] ) // if min greater,
+              min = in; // we have a new mins
+              wap(out, min); // swap them
+    } // end for(out)
+           
+} // end selectionSort()
+
+void insertionSort(){
+    intin, out;
+    for(out=1; out<nElems; out++) // out is dividing line
+    {
+        long temp = a[out];// remove marked item
+        in = out;// start shifts at out
+        while(in>0 && a[in-1] > temp)// until one is smaller,
+        {
+            a[in] = a[in-1]; // shift item right,
+            --in; // go left one position
+            }
+            a[in] = temp; // insert marked item
+    } // end for
+} // end insertionSort()
+
+void merge(long[] workSpace, int lowPtr,int highPtr, int upperBound)
+{
+    int j = 0; // workspace index
+    int lowerBound = lowPtr;
+    int mid = highPtr-1;
+    int n = upperBound-lowerBound+1; // # of items
+    while(lowPtr <= mid && highPtr <= upperBound)
+        if( theArray[lowPtr] < theArray[highPtr] )
+            workSpace[j++] = theArray[lowPtr++];
+        else
+            workSpace[j++] = theArray[highPtr++];
+        while(lowPtr <= mid)
+            workSpace[j++] = theArray[lowPtr++];
+        while(highPtr <= upperBound)
+            workSpace[j++] = theArray[highPtr++];
+        for(j=0; j<n; j++)
+            theArray[lowerBound+j] = workSpace[j];
+} // end merge()
+
+void reMergeSort(long[] workspace ,int lowerBound ,int upperBound)
+{
+    if(loerBound == upperBound)
+       return;
+    else
+    {
+        int mid = (lowerBound+upperBound)/2;
+        reMergeSort(workspace ,lowerBound,mid);
+        reMergeSort(workspace, mid+1, upperBound);
+        merge(workspace,lowerBound,mid+1,upperBound);
+    }
+}
+
